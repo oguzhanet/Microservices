@@ -22,6 +22,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityServer", "IdentityS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreeCourseIdentityServer", "IdentityServer\FreeCourseIdentityServer\FreeCourseIdentityServer.csproj", "{55B3D052-ECD7-4C9F-AEAC-48B862C6A26D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PhotoStock", "PhotoStock", "{294D5D4D-C31A-4298-B248-BF8A78FF9E90}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreeCourseProjectServicesPhotoStockAPI", "Services\PhotoStock\FreeCourseProjectServicesPhotoStockAPI\FreeCourseProjectServicesPhotoStockAPI.csproj", "{5CB62CD1-BF8F-4A58-8A86-943D3081069D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +44,10 @@ Global
 		{55B3D052-ECD7-4C9F-AEAC-48B862C6A26D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55B3D052-ECD7-4C9F-AEAC-48B862C6A26D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55B3D052-ECD7-4C9F-AEAC-48B862C6A26D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CB62CD1-BF8F-4A58-8A86-943D3081069D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CB62CD1-BF8F-4A58-8A86-943D3081069D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CB62CD1-BF8F-4A58-8A86-943D3081069D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CB62CD1-BF8F-4A58-8A86-943D3081069D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -49,6 +57,8 @@ Global
 		{CE0BF23E-3C25-42ED-868F-C9697DA6EE12} = {FF387E47-4962-4439-B93E-609ABA0CEEEE}
 		{7247CE3A-551D-4356-A9BC-73A4B3830499} = {8E587CF3-49A2-4E36-B7B6-1F0ABB0F5CB2}
 		{55B3D052-ECD7-4C9F-AEAC-48B862C6A26D} = {959DF0E6-67BE-4D4A-BDEB-0C506407F5CD}
+		{294D5D4D-C31A-4298-B248-BF8A78FF9E90} = {F3604352-6D28-4C21-9ECF-1D41A85683D4}
+		{5CB62CD1-BF8F-4A58-8A86-943D3081069D} = {294D5D4D-C31A-4298-B248-BF8A78FF9E90}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A8315DE0-332C-4E94-B028-B94979F8A490}
