@@ -6,3 +6,4 @@ Services
  - PhotoStockAPI => 5012
  - BasketAPI => 5013
  - Discount => 5014
+ - Order => 5015
