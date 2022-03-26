@@ -57,7 +57,8 @@ namespace FreeCourseProjectServicesFakePaymentAPI
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "FreeCourseProjectServicesFakePaymentAPI v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "FreeCourseProjectServicesFakePayme" +
+                    "ntAPI v1"));
             }
 
             app.UseRouting();
