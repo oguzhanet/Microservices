@@ -3,6 +3,8 @@ GatewayAPI => 5000
 
 IdentityServerAPI => 5001
 
+WebUI => 5010
+
 Services
  - CatalogAPI => 5011
  - PhotoStockAPI => 5012
