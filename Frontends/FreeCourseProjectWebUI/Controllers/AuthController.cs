@@ -1,5 +1,7 @@
 ﻿using FreeCourseProjectWebUI.Models;
 using FreeCourseProjectWebUI.Services.Abstract;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -27,7 +29,7 @@ namespace FreeCourseProjectWebUI.Controllers
 
             var response = await _identityService.SignIn(singInInput);
 
-            if (response.IsSuccessful)
+            if (!response.IsSuccessful)
             {
                 response.Errors.ForEach(x =>
                 {
@@ -38,6 +40,13 @@ namespace FreeCourseProjectWebUI.Controllers
             }
 
             return RedirectToAction(nameof(Index), "Home");
+        }
+
+        public async Task<IActionResult> LogOut()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            await _identityService.RevokeRefreshToken();
+            return RedirectToAction(nameof(HomeController.Index), "Home");
         }
     }
 }

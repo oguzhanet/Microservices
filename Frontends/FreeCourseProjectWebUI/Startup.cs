@@ -1,6 +1,8 @@
+using FreeCourseProjectWebUI.Handler;
 using FreeCourseProjectWebUI.Models;
 using FreeCourseProjectWebUI.Services.Abstract;
 using FreeCourseProjectWebUI.Services.Concrete;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -25,10 +27,29 @@ namespace FreeCourseProjectWebUI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddHttpContextAccessor();
-            services.AddHttpClient<IIdentityService, IdentityManager>();
             services.Configure<ClientSettings>(Configuration.GetSection("ClientSettings"));
             services.Configure<ServiceApiSettings>(Configuration.GetSection("ServiceApiSettings"));
+            services.AddHttpContextAccessor();
+
+            services.AddHttpClient<IIdentityService, IdentityManager>();
+
+            var serviceApiSettings=Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
+
+            services.AddScoped<ResourceOwnerPasswordTokenHandler>();
+
+            services.AddHttpClient<IUserService, UserManager>(ops =>
+            {
+                ops.BaseAddress = new Uri(serviceApiSettings.IdentityBaseUri);
+            }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, ops =>
+            {
+                ops.LoginPath = "/Auth/SignIn";
+                ops.ExpireTimeSpan = TimeSpan.FromDays(60);
+                ops.SlidingExpiration = true;
+                ops.Cookie.Name = "courseprojectwebcookie";
+            });
+
             services.AddControllersWithViews();
         }
 
@@ -46,6 +67,8 @@ namespace FreeCourseProjectWebUI
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
