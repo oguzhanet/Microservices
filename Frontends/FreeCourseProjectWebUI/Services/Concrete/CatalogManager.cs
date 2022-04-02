@@ -9,12 +9,12 @@ namespace FreeCourseProjectWebUI.Services.Concrete
 {
     public class CatalogManager : ICatalogService
     {
-        //private readonly HttpClient _httpClient;
+        private readonly HttpClient _httpClient;
 
-        //public CatalogManager(HttpClient httpClient)
-        //{
-        //    _httpClient = httpClient;
-        //}
+        public CatalogManager(HttpClient httpClient)
+        {
+            _httpClient = httpClient;
+        }
 
         public Task<bool> CreateCourseAsync(CourseCreateInput courseCreateInput)
         {
