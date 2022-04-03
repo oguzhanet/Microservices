@@ -37,6 +37,11 @@ namespace FreeCourseProjectWebUI
 
             services.AddScoped<ResourceOwnerPasswordTokenHandler>();
 
+            services.AddHttpClient<ICatalogService, CatalogManager>(ops =>
+            {
+                ops.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Catalog.Path}");
+            });
+
             services.AddHttpClient<IUserService, UserManager>(ops =>
             {
                 ops.BaseAddress = new Uri(serviceApiSettings.IdentityBaseUri);

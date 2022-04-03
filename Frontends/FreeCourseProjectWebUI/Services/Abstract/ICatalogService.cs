@@ -10,7 +10,7 @@ namespace FreeCourseProjectWebUI.Services.Abstract
 
         Task<List<CategoryViewModel>> GetAllCategoriesAsync();
 
-        Task<List<CourseViewModel>> GetAllCourseByUserIdAsync(string id);  
+        Task<List<CourseViewModel>> GetAllCourseByUserIdAsync(string userId);  
 
         Task<CourseViewModel> GetByCourseIdAsync(string courseId);
 
