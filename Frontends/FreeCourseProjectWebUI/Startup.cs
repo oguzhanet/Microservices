@@ -2,6 +2,8 @@ using FreeCourseProjectWebUI.Handler;
 using FreeCourseProjectWebUI.Models;
 using FreeCourseProjectWebUI.Services.Abstract;
 using FreeCourseProjectWebUI.Services.Concrete;
+using FreeCourseShared.Services.Abstract;
+using FreeCourseShared.Services.Concrete;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -30,6 +32,8 @@ namespace FreeCourseProjectWebUI
             services.Configure<ClientSettings>(Configuration.GetSection("ClientSettings"));
             services.Configure<ServiceApiSettings>(Configuration.GetSection("ServiceApiSettings"));
             services.AddHttpContextAccessor();
+
+            services.AddScoped<ISharedIdentityService, SharedIdentityManager>();
 
             services.AddHttpClient<IIdentityService, IdentityManager>();
 
