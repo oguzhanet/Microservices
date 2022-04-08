@@ -34,8 +34,8 @@ namespace FreeCourseProjectServicesCatalogAPI.Controllers
             return CreateActionResultInstance(response);
         }
 
-        [HttpGet]
-        [Route("api/[controller]/GetAllByUserId/{userId}")]
+        [HttpGet("GetAllByUserId/{userId}")]
+        [Route("/api/[controller]/GetAllByUserId/{userId}")]
         public async Task<IActionResult> GetAllByUserId(string userId)
         {
             var response = await _courseService.GetAllByUserIdAsync(userId);

@@ -32,18 +32,17 @@ namespace FreeCourseProjectWebUI
             services.Configure<ClientSettings>(Configuration.GetSection("ClientSettings"));
             services.Configure<ServiceApiSettings>(Configuration.GetSection("ServiceApiSettings"));
             services.AddHttpContextAccessor();
+            services.AddAccessTokenManagement();
 
             services.AddScoped<ISharedIdentityService, SharedIdentityManager>();
 
-            services.AddHttpClient<IIdentityService, IdentityManager>();
-
             var serviceApiSettings=Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
-
-            services.AddHttpClient<IClientCredentialTokenService, ClientCredentialTokenManager>();
 
             services.AddScoped<ResourceOwnerPasswordTokenHandler>();
             services.AddScoped<ClientCredentialTokenHandler>();
 
+            services.AddHttpClient<IClientCredentialTokenService, ClientCredentialTokenManager>();
+            services.AddHttpClient<IIdentityService, IdentityManager>();
             services.AddHttpClient<ICatalogService, CatalogManager>(ops =>
             {
                 ops.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Catalog.Path}");
