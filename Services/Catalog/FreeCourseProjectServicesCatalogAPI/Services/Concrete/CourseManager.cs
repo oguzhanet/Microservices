@@ -109,7 +109,7 @@ namespace FreeCourseProjectServicesCatalogAPI.Services.Concrete
 
         public async Task<Response<NoContent>> DeleteAsync(string id)
         {
-            var result = await _courseMongoCollection.DeleteOneAsync(id);
+            var result = await _courseMongoCollection.DeleteOneAsync(x => x.Id == id);
 
             if (result.DeletedCount > 0)
             {
