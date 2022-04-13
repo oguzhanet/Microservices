@@ -17,8 +17,8 @@ namespace FreeCourseProjectServicesPhotoStockAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> PhotoSave(IFormFile photo, CancellationToken cancellationToken)
         {
-            string[] ValidImageFileTypes = { ".JPG", ".JPEG", ".PNG" };
-            bool isValidFileExtension = ValidImageFileTypes.Any(t => t == Path.GetExtension(photo.FileName).ToUpper());
+            string[] validImageFileTypes = { ".JPG", ".JPEG", ".PNG" };
+            bool isValidFileExtension = validImageFileTypes.Any(t => t == Path.GetExtension(photo.FileName).ToUpper());
 
             if (photo != null && photo.Length > 0 && isValidFileExtension == true)
             {
@@ -27,7 +27,7 @@ namespace FreeCourseProjectServicesPhotoStockAPI.Controllers
                 using var stream = new FileStream(path, FileMode.Create);
                 await photo.CopyToAsync(stream, cancellationToken);
 
-                var returnPath = "photos/" + photo.FileName;
+                var returnPath = photo.FileName;
 
                 PhotoDto photoDto = new() { Url = returnPath };
 
@@ -37,7 +37,6 @@ namespace FreeCourseProjectServicesPhotoStockAPI.Controllers
             return CreateActionResultInstance(Response<PhotoDto>.Fail("photo is empty", 400));
         }
 
-        //[HttpPost]
         public IActionResult PhotoDelete(string photoUrl)
         {
             var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/photos", photoUrl);
