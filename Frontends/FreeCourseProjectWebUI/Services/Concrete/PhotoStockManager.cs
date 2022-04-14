@@ -1,5 +1,6 @@
 ﻿using FreeCourseProjectWebUI.Models.PhotoStock;
 using FreeCourseProjectWebUI.Services.Abstract;
+using FreeCourseShared.Concrete;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.IO;
@@ -52,7 +53,9 @@ namespace FreeCourseProjectWebUI.Services.Concrete
                 return null;
             }
 
-            return await response.Content.ReadFromJsonAsync<PhotoViewModel>();
+            var responseSuccess = await response.Content.ReadFromJsonAsync<Response<PhotoViewModel>>();
+
+            return responseSuccess.Data;
         }
     }
 }

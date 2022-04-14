@@ -1,4 +1,5 @@
 using FreeCourseProjectWebUI.Handler;
+using FreeCourseProjectWebUI.Helpers;
 using FreeCourseProjectWebUI.Models;
 using FreeCourseProjectWebUI.Services.Abstract;
 using FreeCourseProjectWebUI.Services.Concrete;
@@ -33,6 +34,7 @@ namespace FreeCourseProjectWebUI
             services.Configure<ServiceApiSettings>(Configuration.GetSection("ServiceApiSettings"));
             services.AddHttpContextAccessor();
             services.AddAccessTokenManagement();
+            services.AddSingleton<PhotoHelper>();
 
             services.AddScoped<ISharedIdentityService, SharedIdentityManager>();
 
