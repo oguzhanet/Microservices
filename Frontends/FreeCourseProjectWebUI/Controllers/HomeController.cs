@@ -1,4 +1,5 @@
 ﻿using FreeCourseProjectWebUI.Models;
+using FreeCourseProjectWebUI.Services.Abstract;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -13,19 +14,24 @@ namespace FreeCourseProjectWebUI.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly ICatalogService _catalogService;
+
+        public HomeController(ILogger<HomeController> logger, ICatalogService catalogService)
         {
             _logger = logger;
+            _catalogService = catalogService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var courses = await _catalogService.GetAllCourseAsync();
+            return View(courses);
         }
 
-        public IActionResult Privacy()
+        public async Task<IActionResult> Detail(string id)
         {
-            return View();
+            var course =await _catalogService.GetByCourseIdAsync(id);
+            return View(course);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
