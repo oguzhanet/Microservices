@@ -1,3 +1,4 @@
+using FreeCourseProjectWebUI.Extensions;
 using FreeCourseProjectWebUI.Handler;
 using FreeCourseProjectWebUI.Helpers;
 using FreeCourseProjectWebUI.Models;
@@ -35,31 +36,11 @@ namespace FreeCourseProjectWebUI
             services.AddHttpContextAccessor();
             services.AddAccessTokenManagement();
             services.AddSingleton<PhotoHelper>();
-
             services.AddScoped<ISharedIdentityService, SharedIdentityManager>();
-
-            var serviceApiSettings=Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
-
             services.AddScoped<ResourceOwnerPasswordTokenHandler>();
             services.AddScoped<ClientCredentialTokenHandler>();
 
-            services.AddHttpClient<IClientCredentialTokenService, ClientCredentialTokenManager>();
-            services.AddHttpClient<IIdentityService, IdentityManager>();
-
-            services.AddHttpClient<ICatalogService, CatalogManager>(ops =>
-            {
-                ops.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Catalog.Path}");
-            }).AddHttpMessageHandler<ClientCredentialTokenHandler>();
-
-            services.AddHttpClient<IPhotoStockService, PhotoStockManager>(ops =>
-            {
-                ops.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.PhotoStock.Path}");
-            }).AddHttpMessageHandler<ClientCredentialTokenHandler>();
-
-            services.AddHttpClient<IUserService, UserManager>(ops =>
-            {
-                ops.BaseAddress = new Uri(serviceApiSettings.IdentityBaseUri);
-            }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
+            services.AddHttpClientServices(Configuration);
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, ops =>
             {
