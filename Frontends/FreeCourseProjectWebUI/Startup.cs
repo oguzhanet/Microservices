@@ -1,9 +1,11 @@
+using FluentValidation.AspNetCore;
 using FreeCourseProjectWebUI.Extensions;
 using FreeCourseProjectWebUI.Handler;
 using FreeCourseProjectWebUI.Helpers;
 using FreeCourseProjectWebUI.Models;
 using FreeCourseProjectWebUI.Services.Abstract;
 using FreeCourseProjectWebUI.Services.Concrete;
+using FreeCourseProjectWebUI.Validators.FluentValidation;
 using FreeCourseShared.Services.Abstract;
 using FreeCourseShared.Services.Concrete;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -50,7 +52,8 @@ namespace FreeCourseProjectWebUI
                 ops.Cookie.Name = "courseprojectwebcookie";
             });
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                .AddFluentValidation((fv => fv.RegisterValidatorsFromAssemblyContaining<CourseCreateInputValidator>()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

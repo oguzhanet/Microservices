@@ -6,7 +6,6 @@ namespace FreeCourseProjectWebUI.Models.Catalog
     public class CourseCreateInput
     {
         [Display(Name ="Kurs ismi")]
-        [Required]
         public string Name { get; set; }
 
         [Display(Name = "Kurs açıklamsı")]
@@ -14,7 +13,6 @@ namespace FreeCourseProjectWebUI.Models.Catalog
         public string Description { get; set; }
 
         [Display(Name = "Kurs ücreti")]
-        [Required]
         public decimal Price { get; set; }
 
         public string UserId { get; set; }
@@ -24,11 +22,9 @@ namespace FreeCourseProjectWebUI.Models.Catalog
         public FeatureViewModel Feature { get; set; }
 
         [Display(Name = "Kurs kategori")]
-        [Required]
         public string CategoryId { get; set; }
 
         [Display(Name = "Kurs resim")]
-        [Required]
         public IFormFile PhotoFormFile { get; set; }
     }
 }
