@@ -40,6 +40,18 @@ namespace FreeCourseProjectWebUI.Models.Basket
             get => _basketItems.Sum(x => x.GetCurrentPrice);
         }
 
-        public bool HasDiscount { get => !string.IsNullOrEmpty(DiscountCode); }
+        public bool HasDiscount { get => !string.IsNullOrEmpty(DiscountCode) && DiscountRate.HasValue; }
+
+        public void CancelDiscount()
+        {
+            DiscountCode = null;
+            DiscountRate = null;
+        }
+
+        public void ApplyDiscount(string code, int rate)
+        {
+            DiscountCode = code;
+            DiscountRate = rate;
+        }
     }
 }

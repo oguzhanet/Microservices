@@ -11,10 +11,12 @@ namespace FreeCourseProjectWebUI.Services.Concrete
     public class BasketManager : IBasketService
     {
         private readonly HttpClient _httpClient;
+        private readonly IDiscountService _discountService;
 
-        public BasketManager(HttpClient httpClient)
+        public BasketManager(HttpClient httpClient, IDiscountService discountService)
         {
             _httpClient = httpClient;
+            _discountService = discountService;
         }
 
         public async Task AddBasketItemAsync(BasketItemViewModel basketItemViewModel)
@@ -37,14 +39,41 @@ namespace FreeCourseProjectWebUI.Services.Concrete
             await SaveOrUpdateAsync(basket);
         }
 
-        public Task<bool> ApplyDiscount(string discountCode)
+        public async Task<bool> ApplyDiscountAsync(string discountCode)
         {
-            throw new System.NotImplementedException();
+            await CancelApplyDiscountAsync();
+
+            var basket = await GetAsync();
+            if (basket == null)
+            {
+                return false;
+            }
+
+            var hasDiscount = await _discountService.GetDiscount(discountCode);
+            if (hasDiscount == null)
+            {
+                return false;
+            }
+
+            basket.ApplyDiscount(hasDiscount.Code, hasDiscount.Rate);
+            await SaveOrUpdateAsync(basket);
+
+            return true;
         }
 
-        public Task<bool> CancelApplyDiscount()
+        public async Task<bool> CancelApplyDiscountAsync()
         {
-            throw new System.NotImplementedException();
+            var basket = await GetAsync();
+
+            if (basket == null || basket.DiscountCode == null)
+            {
+                return false;
+            }
+
+            basket.CancelDiscount();
+            await SaveOrUpdateAsync(basket);
+
+            return true;
         }
 
         public async Task<bool> DeleteAsync()
@@ -68,7 +97,7 @@ namespace FreeCourseProjectWebUI.Services.Concrete
             return basketViewModel.Data;
         }
 
-        public async Task<bool> RemoveBasketItem(string courseId)
+        public async Task<bool> RemoveBasketItemAsync(string courseId)
         {
             var basket = await GetAsync();
 

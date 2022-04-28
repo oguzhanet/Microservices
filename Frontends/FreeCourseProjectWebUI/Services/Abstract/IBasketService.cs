@@ -13,10 +13,10 @@ namespace FreeCourseProjectWebUI.Services.Abstract
 
         Task AddBasketItemAsync(BasketItemViewModel basketItemViewModel);
 
-        Task<bool> RemoveBasketItem(string courseId);
+        Task<bool> RemoveBasketItemAsync(string courseId);
         
-        Task<bool> ApplyDiscount(string discountCode);
+        Task<bool> ApplyDiscountAsync(string discountCode);
 
-        Task<bool> CancelApplyDiscount();
+        Task<bool> CancelApplyDiscountAsync();
     }
 }

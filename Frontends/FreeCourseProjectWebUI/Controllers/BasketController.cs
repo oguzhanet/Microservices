@@ -1,7 +1,9 @@
 ﻿using FreeCourseProjectWebUI.Models.Basket;
+using FreeCourseProjectWebUI.Models.Discount;
 using FreeCourseProjectWebUI.Services.Abstract;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FreeCourseProjectWebUI.Controllers
@@ -42,8 +44,28 @@ namespace FreeCourseProjectWebUI.Controllers
 
         public async Task<IActionResult> RemoveBasketItem(string courseId)
         {
-            await _basketService.RemoveBasketItem(courseId);
+            await _basketService.RemoveBasketItemAsync(courseId);
 
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> ApplyDiscount(DiscountApplyInput discountApplyInput)
+        {
+            if (!ModelState.IsValid)
+            {
+                TempData["discountError"] = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).First();
+                return RedirectToAction(nameof(Index));
+            }
+
+            var discountStatus = await _basketService.ApplyDiscountAsync(discountApplyInput.Code);
+
+            TempData["discountStatus"] = discountStatus;
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> CancelApplyDiscount()
+        {
+            await _basketService.CancelApplyDiscountAsync();
             return RedirectToAction(nameof(Index));
         }
     }
