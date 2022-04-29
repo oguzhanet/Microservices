@@ -14,32 +14,42 @@ namespace FreeCourseProjectWebUI.Extensions
         {
             var serviceApiSettings = Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
 
-            services.AddHttpClient<IClientCredentialTokenService, ClientCredentialTokenManager>();
-            services.AddHttpClient<IIdentityService, IdentityManager>();
+            services.AddHttpClient<IClientCredentialTokenService, ClientCredentialTokenService>();
+            services.AddHttpClient<IIdentityService, IdentityService>();
 
-            services.AddHttpClient<ICatalogService, CatalogManager>(ops =>
+            services.AddHttpClient<ICatalogService, CatalogService>(ops =>
             {
                 ops.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Catalog.Path}");
             }).AddHttpMessageHandler<ClientCredentialTokenHandler>();
 
-            services.AddHttpClient<IPhotoStockService, PhotoStockManager>(ops =>
+            services.AddHttpClient<IPhotoStockService, PhotoStockService>(ops =>
             {
                 ops.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.PhotoStock.Path}");
             }).AddHttpMessageHandler<ClientCredentialTokenHandler>();
 
-            services.AddHttpClient<IUserService, UserManager>(ops =>
+            services.AddHttpClient<IUserService, UserService>(ops =>
             {
                 ops.BaseAddress = new Uri(serviceApiSettings.IdentityBaseUri);
             }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
 
-            services.AddHttpClient<IBasketService, BasketManager>(ops =>
+            services.AddHttpClient<IBasketService, BasketService>(ops =>
             {
                 ops.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Basket.Path}");
             }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
 
-            services.AddHttpClient<IDiscountService, DiscountManager>(ops =>
+            services.AddHttpClient<IDiscountService, DiscountService>(ops =>
             {
                 ops.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Discount.Path}");
+            }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
+
+            services.AddHttpClient<IPaymentService, PaymentService>(ops =>
+            {
+                ops.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Payment.Path}");
+            }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
+
+            services.AddHttpClient<IOrderService, OrderService>(ops =>
+            {
+                ops.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUri}/{serviceApiSettings.Order.Path}");
             }).AddHttpMessageHandler<ResourceOwnerPasswordTokenHandler>();
         }
     }

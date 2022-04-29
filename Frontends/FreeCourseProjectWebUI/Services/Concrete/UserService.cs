@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace FreeCourseProjectWebUI.Services.Concrete
 {
-    public class UserManager : IUserService
+    public class UserService : IUserService
     {
         private readonly HttpClient _httpClient;
 
-        public UserManager(HttpClient httpClient)
+        public UserService(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }

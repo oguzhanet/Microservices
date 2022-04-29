@@ -1,4 +1,4 @@
-﻿using FreeCourseProjectWebUI.Models.PhotoStock;
+﻿using FreeCourseProjectWebUI.Models.PhotoStocks;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 

@@ -1,6 +1,6 @@
 ﻿using FreeCourseProjectWebUI.Helpers;
 using FreeCourseProjectWebUI.Models;
-using FreeCourseProjectWebUI.Models.Catalog;
+using FreeCourseProjectWebUI.Models.Catalogs;
 using FreeCourseProjectWebUI.Services.Abstract;
 using FreeCourseShared.Concrete;
 using System.Collections.Generic;
@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 
 namespace FreeCourseProjectWebUI.Services.Concrete
 {
-    public class CatalogManager : ICatalogService
+    public class CatalogService : ICatalogService
     {
         private readonly HttpClient _httpClient;
         private readonly IPhotoStockService _photoStockService;
         private readonly PhotoHelper _photoHelper;
 
-        public CatalogManager(HttpClient httpClient, IPhotoStockService photoStockService, PhotoHelper photoHelper)
+        public CatalogService(HttpClient httpClient, IPhotoStockService photoStockService, PhotoHelper photoHelper)
         {
             _httpClient = httpClient;
             _photoStockService = photoStockService;

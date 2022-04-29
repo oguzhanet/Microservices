@@ -1,4 +1,4 @@
-﻿namespace FreeCourseProjectWebUI.Models.Catalog
+﻿namespace FreeCourseProjectWebUI.Models.Catalogs
 {
     public class CategoryViewModel
     {

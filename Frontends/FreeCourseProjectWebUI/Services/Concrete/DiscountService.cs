@@ -1,4 +1,4 @@
-﻿using FreeCourseProjectWebUI.Models.Discount;
+﻿using FreeCourseProjectWebUI.Models.Discounts;
 using FreeCourseProjectWebUI.Services.Abstract;
 using FreeCourseShared.Concrete;
 using System.Net.Http;
@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace FreeCourseProjectWebUI.Services.Concrete
 {
-    public class DiscountManager : IDiscountService
+    public class DiscountService : IDiscountService
     {
         private readonly HttpClient _httpClient;
 
-        public DiscountManager(HttpClient httpClient)
+        public DiscountService(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }

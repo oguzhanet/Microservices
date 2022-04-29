@@ -1,4 +1,4 @@
-﻿namespace FreeCourseProjectWebUI.Models.Basket
+﻿namespace FreeCourseProjectWebUI.Models.Baskets
 {
     public class BasketItemViewModel
     {
@@ -6,13 +6,14 @@
 
         public decimal Price { get; set; }
 
-        private decimal? DiscountAppliedPrice { get; set; }
-
         public string CourseId { get; set; }
 
         public string CourseName { get; set; }
 
         public decimal GetCurrentPrice { get => DiscountAppliedPrice != null ? DiscountAppliedPrice.Value : Price; }
+
+
+        private decimal? DiscountAppliedPrice;
 
         public void AppliedDiscount(decimal discountPrice)
         {

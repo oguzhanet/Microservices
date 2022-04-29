@@ -1,4 +1,4 @@
-﻿using FreeCourseProjectWebUI.Models.Catalog;
+﻿using FreeCourseProjectWebUI.Models.Catalogs;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

@@ -1,4 +1,4 @@
-﻿using FreeCourseProjectWebUI.Models.PhotoStock;
+﻿using FreeCourseProjectWebUI.Models.PhotoStocks;
 using FreeCourseProjectWebUI.Services.Abstract;
 using FreeCourseShared.Concrete;
 using Microsoft.AspNetCore.Http;
@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace FreeCourseProjectWebUI.Services.Concrete
 {
-    public class PhotoStockManager : IPhotoStockService
+    public class PhotoStockService : IPhotoStockService
     {
         private readonly HttpClient _httpClient;
 
-        public PhotoStockManager(HttpClient httpClient)
+        public PhotoStockService(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }

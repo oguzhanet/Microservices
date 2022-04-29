@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using FreeCourseProjectWebUI.Models.Discount;
+using FreeCourseProjectWebUI.Models.Discounts;
 
 namespace FreeCourseProjectWebUI.Validators.FluentValidation
 {

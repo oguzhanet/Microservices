@@ -1,4 +1,4 @@
-﻿namespace FreeCourseProjectWebUI.Models.PhotoStock
+﻿namespace FreeCourseProjectWebUI.Models.PhotoStocks
 {
     public class PhotoViewModel
     {

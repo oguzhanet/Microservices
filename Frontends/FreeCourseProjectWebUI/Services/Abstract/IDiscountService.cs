@@ -1,4 +1,4 @@
-﻿using FreeCourseProjectWebUI.Models.Discount;
+﻿using FreeCourseProjectWebUI.Models.Discounts;
 using System.Threading.Tasks;
 
 namespace FreeCourseProjectWebUI.Services.Abstract

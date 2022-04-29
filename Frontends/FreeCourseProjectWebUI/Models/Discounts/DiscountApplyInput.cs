@@ -1,4 +1,4 @@
-﻿namespace FreeCourseProjectWebUI.Models.Discount
+﻿namespace FreeCourseProjectWebUI.Models.Discounts
 {
     public class DiscountApplyInput
     {

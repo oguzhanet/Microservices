@@ -17,14 +17,14 @@ using System.Threading.Tasks;
 
 namespace FreeCourseProjectWebUI.Services.Concrete
 {
-    public class IdentityManager : IIdentityService
+    public class IdentityService : IIdentityService
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly HttpClient _httpClient;
         private readonly ClientSettings _clientSettings;
         private readonly ServiceApiSettings _serviceApiSettings;
 
-        public IdentityManager(IHttpContextAccessor httpContextAccessor, HttpClient httpClient, IOptions<ClientSettings> clientSettings, IOptions<ServiceApiSettings> serviceApiSettings)
+        public IdentityService(IHttpContextAccessor httpContextAccessor, HttpClient httpClient, IOptions<ClientSettings> clientSettings, IOptions<ServiceApiSettings> serviceApiSettings)
         {
             _httpContextAccessor = httpContextAccessor;
             _httpClient = httpClient;

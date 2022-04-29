@@ -1,4 +1,4 @@
-﻿using FreeCourseProjectWebUI.Models.Basket;
+﻿using FreeCourseProjectWebUI.Models.Baskets;
 using System.Threading.Tasks;
 
 namespace FreeCourseProjectWebUI.Services.Abstract

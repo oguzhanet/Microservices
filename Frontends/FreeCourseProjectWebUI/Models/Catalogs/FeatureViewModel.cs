@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace FreeCourseProjectWebUI.Models.Catalog
+namespace FreeCourseProjectWebUI.Models.Catalogs
 {
     public class FeatureViewModel
     {

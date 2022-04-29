@@ -1,4 +1,4 @@
-﻿using FreeCourseProjectWebUI.Models.Basket;
+﻿using FreeCourseProjectWebUI.Models.Baskets;
 using FreeCourseProjectWebUI.Services.Abstract;
 using FreeCourseShared.Concrete;
 using System.Linq;
@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace FreeCourseProjectWebUI.Services.Concrete
 {
-    public class BasketManager : IBasketService
+    public class BasketService : IBasketService
     {
         private readonly HttpClient _httpClient;
         private readonly IDiscountService _discountService;
 
-        public BasketManager(HttpClient httpClient, IDiscountService discountService)
+        public BasketService(HttpClient httpClient, IDiscountService discountService)
         {
             _httpClient = httpClient;
             _discountService = discountService;

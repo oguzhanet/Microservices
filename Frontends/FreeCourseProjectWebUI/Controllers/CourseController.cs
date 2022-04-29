@@ -1,4 +1,4 @@
-﻿using FreeCourseProjectWebUI.Models.Catalog;
+﻿using FreeCourseProjectWebUI.Models.Catalogs;
 using FreeCourseProjectWebUI.Services.Abstract;
 using FreeCourseShared.Services.Abstract;
 using Microsoft.AspNetCore.Authorization;

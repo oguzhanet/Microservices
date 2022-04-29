@@ -1,5 +1,5 @@
-﻿using FreeCourseProjectWebUI.Models.Basket;
-using FreeCourseProjectWebUI.Models.Discount;
+﻿using FreeCourseProjectWebUI.Models.Baskets;
+using FreeCourseProjectWebUI.Models.Discounts;
 using FreeCourseProjectWebUI.Services.Abstract;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
