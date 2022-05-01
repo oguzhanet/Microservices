@@ -1,9 +1,11 @@
 ﻿using FreeCourseProjectWebUI.Models.FakePayments;
 using FreeCourseProjectWebUI.Models.Orders;
 using FreeCourseProjectWebUI.Services.Abstract;
+using FreeCourseShared.Concrete;
 using FreeCourseShared.Services.Abstract;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 namespace FreeCourseProjectWebUI.Services.Concrete
@@ -40,14 +42,51 @@ namespace FreeCourseProjectWebUI.Services.Concrete
             if (!responsePayment)
             {
                 return new OrderCreatedViewModel() { Error = "Ödeme alınamadı", IsSuccessfull = false };
-            }//14
+            }
 
-            throw new System.NotImplementedException();
+            var orderCreateInput = new OrderCreateInput()
+            {
+                BuyerId = _sharedIdentityService.GetUserId,
+                Address = new AddressCreateInput
+                {
+                    District = checkoutInfoInput.District,
+                    Line = checkoutInfoInput.Line,
+                    Province = checkoutInfoInput.Province,
+                    Street = checkoutInfoInput.Street,
+                    ZipCode = checkoutInfoInput.ZipCode,
+                },
+            };
+
+            basket.BasketItems.ForEach(x =>
+            {
+                var orderItem = new OrderItemCreateInput
+                {
+                    ProductId = x.CourseId,
+                    ProductName = x.CourseName,
+                    ProductPrice = x.Price,
+                    PictureUrl = ""
+                };
+
+                orderCreateInput.OrderItems.Add(orderItem);
+            });
+
+            var response = await _httpClient.PostAsJsonAsync<OrderCreateInput>("orders", orderCreateInput);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return new OrderCreatedViewModel() { Error = "Sipariş oluştulamadı", IsSuccessfull = false };
+            }
+
+            var orderCreatedViewModel = await response.Content.ReadFromJsonAsync<OrderCreatedViewModel>();
+
+            return orderCreatedViewModel;
         }
 
-        public Task<List<OrderViewModel>> GetOrder()
+        public async Task<List<OrderViewModel>> GetOrder()
         {
-            throw new System.NotImplementedException();
+            var response = await _httpClient.GetFromJsonAsync<Response<List<OrderViewModel>>>("orders");
+
+            return response.Data;
         }
 
         public Task SuspendOrder(CheckoutInfoInput checkoutInfoInput)

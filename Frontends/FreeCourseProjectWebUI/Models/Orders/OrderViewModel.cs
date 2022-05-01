@@ -11,6 +11,6 @@ namespace FreeCourseProjectWebUI.Models.Orders
 
         public string BuyerId { get; set; }
 
-        public List<OrderItemCreateInput> OrderItems { get; set; }
+        public List<OrderItemViewModel> OrderItems { get; set; }
     }
 }
