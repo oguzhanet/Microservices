@@ -37,7 +37,7 @@ namespace FreeCourseProjectWebUI.Services.Concrete
                 Expiration = checkoutInfoInput.Expiration,
                 Price = basket.TotalPrice
             };
-            var responsePayment=await _paymentService.ReceivePayment(paymentInfoInput);
+            var responsePayment = await _paymentService.ReceivePayment(paymentInfoInput);
 
             if (!responsePayment)
             {
@@ -93,9 +93,54 @@ namespace FreeCourseProjectWebUI.Services.Concrete
             return response.Data;
         }
 
-        public Task SuspendOrder(CheckoutInfoInput checkoutInfoInput)
+        public async Task<OrderSuspendViewModel> SuspendOrder(CheckoutInfoInput checkoutInfoInput)
         {
-            throw new System.NotImplementedException();
+            var basket = await _basketService.GetAsync();
+
+            var orderCreateInput = new OrderCreateInput()
+            {
+                BuyerId = _sharedIdentityService.GetUserId,
+                Address = new AddressCreateInput
+                {
+                    District = checkoutInfoInput.District,
+                    Line = checkoutInfoInput.Line,
+                    Province = checkoutInfoInput.Province,
+                    Street = checkoutInfoInput.Street,
+                    ZipCode = checkoutInfoInput.ZipCode,
+                },
+            };
+
+            basket.BasketItems.ForEach(x =>
+            {
+                var orderItem = new OrderItemCreateInput
+                {
+                    ProductId = x.CourseId,
+                    ProductName = x.CourseName,
+                    ProductPrice = x.GetCurrentPrice,
+                    PictureUrl = ""
+                };
+
+                orderCreateInput.OrderItems.Add(orderItem);
+            });
+
+            var paymentInfoInput = new FakePaymentInfoInput()
+            {
+                CardName = checkoutInfoInput.CardName,
+                CardNumber = checkoutInfoInput.CardNumber,
+                Cvv = checkoutInfoInput.Cvv,
+                Expiration = checkoutInfoInput.Expiration,
+                Price = basket.TotalPrice,
+                Order = orderCreateInput
+            };
+
+            var responsePayment = await _paymentService.ReceivePayment(paymentInfoInput);
+
+            if (!responsePayment)
+            {
+                return new OrderSuspendViewModel() { Error = "Ödeme alınamadı", IsSuccessfull = false };
+            }
+
+            return new OrderSuspendViewModel() { IsSuccessfull = true };
         }
     }
 }

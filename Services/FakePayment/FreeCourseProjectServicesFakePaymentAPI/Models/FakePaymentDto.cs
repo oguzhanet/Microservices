@@ -11,5 +11,7 @@
         public string Cvv { get; set; }
 
         public decimal Price { get; set; }
+
+        public OrderDto Order { get; set; }
     }
 }
