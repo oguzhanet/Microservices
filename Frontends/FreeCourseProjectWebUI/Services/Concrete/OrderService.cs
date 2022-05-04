@@ -63,7 +63,7 @@ namespace FreeCourseProjectWebUI.Services.Concrete
                 {
                     ProductId = x.CourseId,
                     ProductName = x.CourseName,
-                    ProductPrice = x.Price,
+                    ProductPrice = x.GetCurrentPrice,
                     PictureUrl = ""
                 };
 
@@ -76,10 +76,14 @@ namespace FreeCourseProjectWebUI.Services.Concrete
             {
                 return new OrderCreatedViewModel() { Error = "Sipariş oluştulamadı", IsSuccessfull = false };
             }
+            //var responseString=response.Content.ReadAsStringAsync();
+            var orderCreatedViewModel = await response.Content.ReadFromJsonAsync<Response<OrderCreatedViewModel>>();
 
-            var orderCreatedViewModel = await response.Content.ReadFromJsonAsync<OrderCreatedViewModel>();
+            orderCreatedViewModel.Data.IsSuccessfull = true;
 
-            return orderCreatedViewModel;
+            await _basketService.DeleteAsync();
+
+            return orderCreatedViewModel.Data;
         }
 
         public async Task<List<OrderViewModel>> GetOrder()
