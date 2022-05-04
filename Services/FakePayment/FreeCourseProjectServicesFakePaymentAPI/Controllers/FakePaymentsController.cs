@@ -34,6 +34,7 @@ namespace FreeCourseProjectServicesFakePaymentAPI.Controllers
             createOrderMessageCommand.District = fakePaymentDto.Order.Address.District;
             createOrderMessageCommand.Street = fakePaymentDto.Order.Address.Street;
             createOrderMessageCommand.Line = fakePaymentDto.Order.Address.Line;
+            createOrderMessageCommand.ZipCode = fakePaymentDto.Order.Address.ZipCode;
 
             fakePaymentDto.Order.OrderItems.ForEach(x =>
             {

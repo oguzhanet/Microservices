@@ -1,6 +1,7 @@
 ﻿using FreeCourseProjectWebUI.Models.Orders;
 using FreeCourseProjectWebUI.Services.Abstract;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace FreeCourseProjectWebUI.Controllers
@@ -20,14 +21,18 @@ namespace FreeCourseProjectWebUI.Controllers
         {
             var basket = await _basketService.GetAsync();
 
-            ViewBag.basket=basket;
+            ViewBag.basket = basket;
             return View(new CheckoutInfoInput());
         }
 
         [HttpPost]
         public async Task<IActionResult> Checkout(CheckoutInfoInput checkoutInfoInput)
         {
-            var orderStatus=await _orderService.CreateOrder(checkoutInfoInput);
+            //sync
+            //var orderStatus = await _orderService.CreateOrder(checkoutInfoInput);
+
+            //async
+            var orderStatus = await _orderService.SuspendOrder(checkoutInfoInput);
 
             if (!orderStatus.IsSuccessfull)
             {
@@ -38,12 +43,16 @@ namespace FreeCourseProjectWebUI.Controllers
                 return View();
             }
 
-            return RedirectToAction(nameof(SuccessfullCheckout), new {orderId=orderStatus.OrderId});
+            //sync
+            //return RedirectToAction(nameof(SuccessfullCheckout), new { orderId = orderStatus.OrderId });
+
+            //async
+            return RedirectToAction(nameof(SuccessfullCheckout), new { orderId = new Random().Next(1,1000) });
         }
 
         public IActionResult SuccessfullCheckout(int orderId)
         {
-            ViewBag.orderId=orderId;    
+            ViewBag.orderId = orderId;
             return View();
         }
     }

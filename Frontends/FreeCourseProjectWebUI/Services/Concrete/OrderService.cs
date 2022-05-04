@@ -140,6 +140,8 @@ namespace FreeCourseProjectWebUI.Services.Concrete
                 return new OrderSuspendViewModel() { Error = "Ödeme alınamadı", IsSuccessfull = false };
             }
 
+            await _basketService.DeleteAsync();
+
             return new OrderSuspendViewModel() { IsSuccessfull = true };
         }
     }

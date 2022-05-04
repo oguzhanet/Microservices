@@ -1,7 +1,9 @@
+using FreeCourseProjectServicesOrderApplication.Consumers;
 using FreeCourseProjectServicesOrderApplication.Handlers;
 using FreeCourseProjectServicesOrderInfrastructure;
 using FreeCourseShared.Services.Abstract;
 using FreeCourseShared.Services.Concrete;
+using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -35,6 +37,28 @@ namespace FreeCourseProjectServicesOrderAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMassTransit(x =>
+            {
+                x.AddConsumer<CreateOrderMessageCommandConsumer>();
+
+                // default port: 5672
+                x.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.Host(Configuration["RabbitMQUrl"], "/", host =>
+                    {
+                        host.Username("guest"); // default value
+                        host.Password("guest");
+                    });
+
+                    cfg.ReceiveEndpoint("create-order-service", o =>
+                    {
+                        o.ConfigureConsumer<CreateOrderMessageCommandConsumer>(context);
+                    });
+                });
+            });
+
+            services.AddMassTransitHostedService();
+
             var requreAuthorizePolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
 
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("sub");
