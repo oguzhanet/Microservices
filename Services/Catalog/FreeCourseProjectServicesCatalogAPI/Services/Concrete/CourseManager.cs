@@ -4,23 +4,24 @@ using FreeCourseProjectServicesCatalogAPI.Models;
 using FreeCourseProjectServicesCatalogAPI.Services.Abstract;
 using FreeCourseProjectServicesCatalogAPI.Settings;
 using FreeCourseShared.Concrete;
+using Mass = MassTransit;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FreeCourseShared.Messages;
 
 namespace FreeCourseProjectServicesCatalogAPI.Services.Concrete
 {
     public class CourseManager : ICourseService
     {
         private readonly IMongoCollection<Course> _courseMongoCollection;
-
         private readonly IMongoCollection<Category> _categoryMongoCollection;
-
         private readonly IMapper _mapper;
+        private readonly Mass.IPublishEndpoint _publishEndpoint;
 
-        public CourseManager(IMapper mapper, IDatabaseSettings databaseSettings)
+        public CourseManager(IMapper mapper, IDatabaseSettings databaseSettings, Mass.IPublishEndpoint publishEndpoint)
         {
             var client = new MongoClient(databaseSettings.ConnectionString);
 
@@ -29,6 +30,7 @@ namespace FreeCourseProjectServicesCatalogAPI.Services.Concrete
             _courseMongoCollection = database.GetCollection<Course>(databaseSettings.CourseCollectionName);
             _categoryMongoCollection = database.GetCollection<Category>(databaseSettings.CategoryCollectionName);
             _mapper = mapper;
+            _publishEndpoint = publishEndpoint;
         }
 
         public async Task<Response<List<CourseDto>>> GetAllAsync()
@@ -103,6 +105,12 @@ namespace FreeCourseProjectServicesCatalogAPI.Services.Concrete
             {
                 return Response<NoContent>.Fail("Course not found", 404);
             }
+
+            await _publishEndpoint.Publish<CourseNameChangedEvent>(new CourseNameChangedEvent
+            {
+                CourseId = updateCourse.Id,
+                UpdatedName = courseUpdateDto.Name
+            });
 
             return Response<NoContent>.Success(204);
         }
