@@ -46,7 +46,17 @@ services:
     image: order_api_image  
     build: 
       context: .
-      dockerfile: Services/Order/FreeCourseProjectServicesOrderAPI/Dockerfile               
+      dockerfile: Services/Order/FreeCourseProjectServicesOrderAPI/Dockerfile  
+  gateway.api:
+    image: gateway_api_image  
+    build: 
+      context: .
+      dockerfile: Gateways/FreeCourseProjectGatewayAPI/Dockerfile     
+  aspnetcoremvc.web:
+    image: aspnetcoremvc_web_image  
+    build: 
+      context: .
+      dockerfile: Frontends/FreeCourseProjectWebUI/Dockerfile                   
 volumes:
   catalogdb_volume:    
   discountdb_volume:    
